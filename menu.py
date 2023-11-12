@@ -1,7 +1,7 @@
 import hashlib
 from encryption import chiffrement_cesar,dechiffrement_cesar,chiffrement_cesar_26_lettres
 from hashage import attaquer_par_dictionnaire
-from dataset import afficher_courbes,collecter_dataset,Salaire_AnneeExp,afficher_correlation,analyser_salaires,regression_lineaire
+from dataset import afficher_courbes,collecter_dataset,Salaire_AnneeExp,afficher_correlation,analyser_salaires,regression_lineaire,analyser_age,comparer_salaires_par_age,comparer_salaires_par_gender,comparer_salaires_par_experience
 import colorama
 import maskpass
 from art import text2art
@@ -30,13 +30,11 @@ def menu_cesar_lettre():
         print(colorama.Fore.RED)
         if sous_choix_cesar == "1":
                 mot = input("Entrez le mot : ")
-                #mot = maskpass.askpass("Entrez le mot :")
                 decalage = int(input("Entrez la valeur de décalage : "))
                 mot_chiffre = chiffrement_cesar_26_lettres(mot, decalage)
                 print(f"Mot chiffré par Caesar : {mot_chiffre}")
         elif sous_choix_cesar == "2":
                 mot = input("Entrez le mot chiffré : ")
-                #mot = maskpass.askpass("Entrez le mot chiffré :")
                 decalage = int(input("Entrez la valeur de décalage : "))
                 mot_dechiffre = dechiffrement_cesar(mot, decalage)
                 print(f"Mot déchiffré par Caesar : {mot_dechiffre}")
@@ -50,12 +48,12 @@ def menu_cesar_code_asscii():
         print(colorama.Fore.GREEN)
         print("1- Chiffrer un mot par code ascii")
         print("2- Déchiffrer un mot par code ascii")
-        print("d- Revenir au menu principal")
+        print("3- Revenir au menu principal")
         sous_choix_cesar = input("Choisissez une option : ")
         print(colorama.Fore.RED)
         if sous_choix_cesar == "1":
                 mot = input("Entrez le mot : ")
-                #mot = maskpass.askpass("Entrez le mot :")
+               
                 decalage = int(input("Entrez la valeur de décalage : "))
                 mot_chiffre = chiffrement_cesar(mot, decalage)
                 print(f"Mot chiffré par Caesar : {mot_chiffre}")
@@ -64,7 +62,7 @@ def menu_cesar_code_asscii():
                 decalage = int(input("Entrez la valeur de décalage : "))
                 mot_dechiffre = dechiffrement_cesar(mot, decalage)
                 print(f"Mot déchiffré par Caesar : {mot_dechiffre}")
-        elif sous_choix_cesar == "d":
+        elif sous_choix_cesar == "3":
                 second_menu_after_authentification()
         else:
                 print("Option invalide. Choisissez à nouveau.")
@@ -127,27 +125,34 @@ def collecter_dataset_menu():
         print("a- Affichez le Dataset sous forme de dictionnaire")
         print("b- Afficher des courbes")
         print("c- Analyser les salaires")
-        print("d- Afficher la matrice de corrélation")
-        print("e- Effectuer une régression linéaire")
-        print("f- Revenir au menu principal")
+        print("d- Analyser les ages")
+        print("e- Afficher la matrice de corrélation")
+        print("f- Effectuer une régression linéaire")
+        print("g- Effectuer des comparaisons")
+        print("h- Revenir au menu principal")
         choix = input("Choisissez une option : ")
+        dataset = collecter_dataset()
         print(colorama.Fore.RED)
         if choix == "a":
-            dataset = collecter_dataset()
             print(dataset)
         elif choix == "b":
             menu_courbe()
         elif choix == "c":
-            dataset = collecter_dataset()
+            
             analyser_salaires(dataset)
         elif choix == "d":
-            dataset = collecter_dataset()
-            afficher_correlation(dataset)
+            
+            analyser_age(dataset)
         elif choix == "e":
-            dataset = collecter_dataset()
-            regression_lineaire(dataset)
+            
+            afficher_correlation(dataset)
         elif choix == "f":
-            break
+            
+            regression_lineaire(dataset)
+        elif choix == "g":
+            menu_categorie()
+        elif choix == "h":
+            second_menu_after_authentification()
         else:
             print("Option invalide. Choisissez à nouveau.")
 
@@ -155,7 +160,7 @@ def collecter_dataset_menu():
 
 def menu_courbe():
     while True:
-        print(colorama.Fore.GREEN)
+        print(colorama.Fore.RED)
         print("1- Afficher le salaire en fonction du sexe")
         print("2- le salaire en fonction des annees d'experience ")
         print("3- revenir au menu precedent ")
@@ -172,4 +177,27 @@ def menu_courbe():
        
         else:
             print("Option invalide. Choisissez à nouveau.")
+
+
+def menu_categorie():
+    while True:
+        dataset = collecter_dataset()
+        print("1-Age")
+        print("2-Genre")
+        print("3-annee d'experience")
+        print("4-Retour ")
+        choix = input("Choisissez une option : ")
+        if choix == "1":
+            
+            comparer_salaires_par_age(dataset)
+        elif choix == "2":
+            comparer_salaires_par_gender(dataset)
+            
+        elif choix=="3":
+            comparer_salaires_par_experience(dataset)
+        
+        elif choix=="4":
+            collecter_dataset_menu()
+            
+
 

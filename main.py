@@ -9,8 +9,6 @@ while True:
     if choix == "1":
         email = introduire_email()
         pwd = introduire_password()
-
-      
         if enregistrer(email, pwd):
             print("Enregistrement réussi.Merci de s'authentifier !")
         else:

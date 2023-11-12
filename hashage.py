@@ -6,12 +6,11 @@ def hacher_sha256(mot):
     return hashed
 
 def attaquer_par_dictionnaire(mot):
-  
+    mot_hache = hacher_sha256(mot)
+
     with open('dictionnaire.txt', 'r') as fichier:
-        dictionnaire = fichier.read().splitlines()
-        hacher_sha256(mot)
-    if mot in dictionnaire:
-        print(f"Le mot original de ce hashage '{hacher_sha256(mot)}'est '{mot}'. L'attaque a réussi.")
-        
+        dictionnaire = [hacher_sha256(m) for m in fichier.read().splitlines()]
+    if mot_hache in dictionnaire:
+        print(f"Le mot original de ce hashage '{mot_hache}' est '{mot}'. L'attaque a réussi.")
     else:
-        print(f"Le mot haché  n'a pas été trouvé . L'attaque a échoué.")
+        print("Le mot haché n'a pas été trouvé dans le dictionnaire. L'attaque a échoué.")

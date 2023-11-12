@@ -32,8 +32,5 @@ def chiffrement_cesar_26_lettres(message, decalage):
 
 
 def dechiffrement_cesar_26_lettres(mot, decalage):
-    return chiffrement_cesar(mot, 26 - decalage)
-
-
-
+    return chiffrement_cesar_26_lettres(mot, 26 - decalage)
 
